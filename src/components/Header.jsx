@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
@@ -56,3 +57,16 @@ const Header = () => {
 };
 
 export default Header;
+=======
+// Хедер для навігації
+import { Link } from 'react-router-dom';
+export default function Header() {
+  return (
+    <header style={{ padding: '16px', borderBottom: '1px solid #eee' }}>
+      <nav>
+        <Link to="/">Home</Link> | <Link to="/catalog">Catalog</Link>
+      </nav>
+    </header>
+  );
+}
+>>>>>>> a18d4b20033625ffda6bd9b6c95a3ac7526aaffb
