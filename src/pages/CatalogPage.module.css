@@ -1,0 +1,199 @@
+.catalogPage {
+  display: flex;
+  gap: 40px;
+  padding: 20px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.filtersSection {
+  width: 280px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  position: sticky;
+  top: 100px;
+  align-self: flex-start;
+}
+
+.filterGroup {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 16px;
+}
+
+.filterTitle {
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.vehicleTypeIcons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.vehicleTypeIcons button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 120px;
+  height: 48px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.vehicleTypeIcons button.activeVehicleType {
+  background-color: #FF6347;
+  color: white;
+  border-color: #FF6347;
+}
+
+.iconGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.iconButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.8rem;
+  color: #333;
+  text-align: center;
+  width: 100%;
+  height: 72px;
+}
+
+.iconButton img {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 6px;
+}
+
+.iconButton.active {
+  border: 2px solid #FF6347;
+  background-color: #fff5f0;
+  color: #FF6347;
+  font-weight: bold;
+}
+
+.searchButton {
+  padding: 10px;
+  background-color: #FF6347;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: auto;
+  width: 100%;
+  align-self: flex-end;
+}
+
+.searchButton:hover {
+  background-color: #FF4500;
+}
+
+.camperList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex-grow: 1;
+  max-width: 100%;
+}
+
+.camperList img {  
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.loadMoreContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  width: 100%;
+}
+
+.loadMoreButton {
+  padding: 12px 24px;
+  background-color: #FF6347;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.loadMoreButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+@media (max-width: 1024px) {
+  .catalogPage {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .filtersSection {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    position: static;
+  }
+
+  .vehicleTypeIcons {
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .filtersSection {
+    flex-direction: column;
+  }
+
+  .vehicleTypeIcons button {
+    width: 100%;
+  }
+
+  .iconGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+header {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 1000;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+}
