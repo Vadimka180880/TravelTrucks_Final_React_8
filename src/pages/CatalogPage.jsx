@@ -8,7 +8,7 @@ import Loader from '../components/Loader';
 import ACIcon from '../assets/icon_catalog/wind.svg';
 import KitchenIcon from '../assets/icon_catalog/cup-hot.svg';
 import AutomaticIcon from '../assets/icon_catalog/diagram.svg';
-import BathroomIcon from '../assets/icon_item/bathroom.png';
+import BathroomIcon from '../assets/icon_catalog/bathroom.svg';
 import TVIcon from '../assets/icon_catalog/tv.svg';
 import RadioIcon from '../assets/icon_catalog/bi_grid.svg';
 import FridgeIcon from '../assets/icon_catalog/solar_fridge-outline.svg';
@@ -107,7 +107,12 @@ const CatalogPage = () => {
     // Обладнання (AC, bathroom, kitchen, TV, ...)
     if (filters.equipment && Array.isArray(filters.equipment) && filters.equipment.length > 0) {
       for (let eq of filters.equipment) {
-        if (!(camper[eq] || camper[eq.toLowerCase()] || camper[eq.toUpperCase()])) return false;
+        // Спеціальна логіка для 'automatic' – це значення в camper.transmission
+        if (eq === 'automatic') {
+          if (!(camper.transmission && camper.transmission.toLowerCase() === 'automatic')) return false;
+          continue;
+        }
+        if (!(camper[eq] || camper[eq?.toLowerCase?.()] || camper[eq?.toUpperCase?.()])) return false;
       }
     }
     // Локація

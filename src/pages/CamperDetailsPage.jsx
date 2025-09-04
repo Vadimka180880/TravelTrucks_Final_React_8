@@ -18,6 +18,7 @@ import MicrowaveIcon from '../assets/icon_item/Microwave.png';
 import GasIcon from '../assets/icon_item/Gas.png';
 import WaterIcon from '../assets/icon_item/Container-2.png';
 import PetrolIcon from '../assets/icon_item/Petrol.png';
+import { formatPrice } from '../utils/formatPrice';
 
 const CamperDetailsPage = () => {
   const { id } = useParams();
@@ -72,7 +73,7 @@ const CamperDetailsPage = () => {
           <span className={styles.reviews}>({camper.reviews.length} Reviews)</span>
           <span className={styles.location}>📍 {camper.location}</span>
         </div>
-        <p className={styles.price}>€{camper.price.toFixed(2)}</p>
+  <p className={styles.price}>€{formatPrice(camper.price)}</p>
       </div>
 
       <div className={styles.imageGallery}>

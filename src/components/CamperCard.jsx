@@ -20,6 +20,7 @@ import WaterIcon from '../assets/icon_catalog/ion_water-outline.svg';
 import Heart from '../assets/icon_catalog/heart.svg';
 import HeartFilled from '../assets/icon_catalog/heart-filled.svg';
 import Star from '../assets/icon_catalog/star.svg';
+import { formatPrice } from '../utils/formatPrice';
 
 const CamperCard = ({ camper, isFavorite, toggleFavorite }) => {
   const imageUrl = camper.gallery?.[0]?.thumb || 'default-image.jpg';
@@ -47,7 +48,7 @@ const CamperCard = ({ camper, isFavorite, toggleFavorite }) => {
         <div className={styles.titleRow}>
           <h2 className={styles.title}>{camper.name}</h2>
           <div className={styles.priceFavoriteWrapper}>
-            <p className={styles.price}>€{camper.price.toFixed(2)}</p>
+            <p className={styles.price}>€{formatPrice(camper.price)}</p>
             <img
               src={isFavorite ? HeartFilled : Heart}
               alt="Favorite"
