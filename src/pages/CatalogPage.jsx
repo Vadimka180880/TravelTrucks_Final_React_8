@@ -1,146 +1,205 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  fetchCampers,
-  setFilters,
-  setVehicleType,
-  resetCampers,
-  toggleFavorite,
-  nextPage,
-} from '../store/slices/campersSlice';
 
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCampers, setFilters, setVehicleType, toggleFavorite, nextPage } from '../store/slices/campersSlice';
 import CamperCard from '../components/CamperCard';
 import Loader from '../components/Loader';
-import styles from './CatalogPage.module.css';
 
-import VanIcon from '../assets/icon_catalog/bi_grid.svg';
-import FullyIntegratedIcon from '../assets/icon_catalog/bi_grid-1x2.svg';
-import AlcoveIcon from '../assets/icon_catalog/bi_grid-3x3-gap.svg';
 import ACIcon from '../assets/icon_catalog/wind.svg';
 import KitchenIcon from '../assets/icon_catalog/cup-hot.svg';
 import BathroomIcon from '../assets/icon_catalog/diagram.svg';
 import TVIcon from '../assets/icon_catalog/tv.svg';
-import RefrigeratorIcon from '../assets/icon_catalog/solar_fridge-outline.svg';
+import RadioIcon from '../assets/icon_catalog/bi_grid.svg';
+import FridgeIcon from '../assets/icon_catalog/solar_fridge-outline.svg';
 import MicrowaveIcon from '../assets/icon_catalog/lucide_microwave.svg';
 import GasIcon from '../assets/icon_catalog/hugeicons_gas-stove.svg';
 import WaterIcon from '../assets/icon_catalog/ion_water-outline.svg';
-
-const equipmentList = [
-  { key: 'AC', label: 'AC', icon: ACIcon },
-  { key: 'kitchen', label: 'Kitchen', icon: KitchenIcon },
-  { key: 'bathroom', label: 'Bathroom', icon: BathroomIcon },
-  { key: 'TV', label: 'TV', icon: TVIcon },
-  { key: 'refrigerator', label: 'Refrigerator', icon: RefrigeratorIcon },
-  { key: 'microwave', label: 'Microwave', icon: MicrowaveIcon },
-  { key: 'gas', label: 'Gas', icon: GasIcon },
-  { key: 'water', label: 'Water', icon: WaterIcon },
-];
+import VanIcon from '../assets/icon_catalog/bi_grid-1x2.svg';
+import FullyIntegratedIcon from '../assets/icon_catalog/bi_grid-3x3-gap.svg';
+import AlcoveIcon from '../assets/icon_catalog/bi_grid.svg';
+import styles from './CatalogPage.module.css';
 
 const CatalogPage = () => {
-  const dispatch = useDispatch();
-  const { items, status, hasMore, filters, vehicleType, error, favorites } = useSelector((state) => state.campers);
-  const [localVehicleType, setLocalVehicleType] = useState(vehicleType);
-  const [page, setPage] = useState(1);
 
+  const dispatch = useDispatch();
+  const { items: campers, status, favorites } = useSelector((state) => state.campers);
+  const [visibleCount, setVisibleCount] = useState(4);
+  const loading = status === 'loading';
+
+  // Redux фільтри
+  const filters = useSelector((state) => state.campers.filters);
+  const vehicleType = useSelector((state) => state.campers.vehicleType);
+  // Локальний стан для фільтрів
+  const [localEquipment, setLocalEquipment] = useState(filters.equipment || []);
+  const [localVehicleType, setLocalVehicleType] = useState(vehicleType || '');
+  const [localLocation, setLocalLocation] = useState(filters.location || '');
+
+  // Завантаження campers
   useEffect(() => {
-    dispatch(resetCampers());
-    dispatch(fetchCampers(1));
+    dispatch(fetchCampers());
   }, [dispatch]);
 
-  const handleSearch = () => {
-    dispatch(resetCampers());
-    dispatch(setVehicleType(localVehicleType));
-    dispatch(fetchCampers(1));
-    setPage(1);
+  // Відновлення фільтрів з localStorage
+  useEffect(() => {
+    // Скидаємо фільтри при першому завантаженні
+    dispatch(setFilters({ equipment: [], location: '' }));
+    dispatch(setVehicleType(''));
+    setLocalEquipment([]);
+    setLocalVehicleType('');
+    setLocalLocation('');
+  }, [dispatch]);
+
+  const equipmentList = [
+    { key: 'AC', label: 'AC', icon: ACIcon },
+    { key: 'kitchen', label: 'Kitchen', icon: KitchenIcon },
+    { key: 'bathroom', label: 'Bathroom', icon: BathroomIcon },
+    { key: 'TV', label: 'TV', icon: TVIcon },
+    { key: 'radio', label: 'Radio', icon: RadioIcon },
+    { key: 'refrigerator', label: 'Fridge', icon: FridgeIcon },
+    { key: 'microwave', label: 'Microwave', icon: MicrowaveIcon },
+    { key: 'gas', label: 'Gas', icon: GasIcon },
+    { key: 'water', label: 'Water', icon: WaterIcon },
+  ];
+
+  const vehicleTypes = [
+    { key: 'panelTruck', label: 'Van', icon: VanIcon },
+    { key: 'fullyIntegrated', label: 'Fully Integrated', icon: FullyIntegratedIcon },
+    { key: 'alcove', label: 'Alcove', icon: AlcoveIcon },
+  ];
+
+  const handleEquipmentClick = (key) => {
+    setLocalEquipment((prev) =>
+      prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]
+    );
   };
 
-  const loadMore = () => {
-    if (status !== 'loading') {
-      dispatch(fetchCampers(page + 1));
-      dispatch(nextPage()); 
-    }
+  const handleVehicleTypeClick = (type) => {
+    setLocalVehicleType(type);
   };
+
+  const handleSearch = () => {
+    dispatch(setFilters({ equipment: localEquipment, location: localLocation }));
+    dispatch(setVehicleType(localVehicleType));
+    localStorage.setItem('filters', JSON.stringify({ ...filters, equipment: localEquipment, location: localLocation }));
+    localStorage.setItem('vehicleType', localVehicleType);
+    localStorage.setItem('location', localLocation);
+  };
+
+  const handleToggleFavorite = (id) => {
+    dispatch(toggleFavorite(id));
+  };
+
+  const handleLoadMore = () => {
+    setVisibleCount((prev) => prev + 4);
+  };
+
+  // Фільтрація campers
+  console.log('Campers:', campers);
+  // Фільтрація campers згідно реальних ключів з API
+  console.log('vehicleType:', vehicleType);
+  console.log('campers form:', campers.map(c => c.form));
+  const filteredCampers = Array.isArray(campers) ? campers.filter((camper) => {
+    // Тип кузова (alcove, ...)
+    if (vehicleType && vehicleType !== '' && camper.form?.toLowerCase() !== vehicleType.toLowerCase()) return false;
+    // Обладнання (AC, bathroom, kitchen, TV, ...)
+    if (filters.equipment && Array.isArray(filters.equipment) && filters.equipment.length > 0) {
+      for (let eq of filters.equipment) {
+        if (!(camper[eq] || camper[eq.toLowerCase()] || camper[eq.toUpperCase()])) return false;
+      }
+    }
+    // Локація
+    if (filters.location && filters.location.length > 0) {
+      if (!camper.location?.toLowerCase().includes(filters.location.toLowerCase())) return false;
+    }
+    return true;
+  }) : [];
 
   return (
-    <div className={styles.catalogPage}>
-      <div className={styles.filtersSection}>
-        <div className={styles.filterGroup}>
-          <div className={styles.filterTitle}>Vehicle Type</div>
-          <div className={styles.vehicleTypeIcons}>
-            {[
-              { type: 'Van', icon: VanIcon },
-              { type: 'Fully Integrated', icon: FullyIntegratedIcon },
-              { type: 'Alcove', icon: AlcoveIcon },
-            ].map(({ type, icon }) => (
-              <button
-                key={type}
-                className={`${styles.vehicleTypeButton} ${
-                  localVehicleType === type ? styles.activeVehicleType : ''
-                }`}
-                onClick={() => setLocalVehicleType(type)}
-              >
-                <img src={icon} alt={type} className={styles.icon} />
-                {type}
-              </button>
-            ))}
-          </div>
+    <div className={styles.catalogPageWrapper}>
+      <aside className={styles.filterSidebar}>
+        {/* Location filter */}
+        <div className={styles.filterBlock}>
+          <div className={styles.filterLabel}>Location</div>
+          <input
+            className={styles.locationInput}
+            placeholder="Kyiv, Ukraine"
+            value={localLocation}
+            onChange={e => setLocalLocation(e.target.value)}
+          />
         </div>
-
-        <div className={styles.filterGroup}>
-          <div className={styles.filterTitle}>Vehicle Equipment</div>
+        {/* Vehicle equipment */}
+        <div className={styles.filterBlock}>
+          <div className={styles.filterLabel}>Vehicle equipment</div>
           <div className={styles.iconGrid}>
-            {equipmentList.map(({ key, label, icon }) => (
+            {equipmentList.map((item) => (
               <button
-                key={key}
-                className={`${styles.iconButton} ${filters[key] ? styles.active : ''}`}
-                onClick={() => {
-                  dispatch(setFilters({ [key]: !filters[key] }));
-                }}
+                key={item.key}
+                className={
+                  styles.iconButton +
+                  (localEquipment && localEquipment.includes(item.key) ? ' ' + styles.active : '')
+                }
+                type="button"
+                onClick={() => handleEquipmentClick(item.key)}
               >
-                <img src={icon} alt={label} />
-                {label}
+                <img src={item.icon} alt={item.label} />
+                <span>{item.label}</span>
               </button>
             ))}
           </div>
         </div>
-
+        {/* Vehicle type */}
+        <div className={styles.filterBlock}>
+          <div className={styles.filterLabel}>Vehicle type</div>
+          <div className={styles.vehicleTypeIcons}>
+            {vehicleTypes.map((type) => (
+              <button
+                key={type.key}
+                className={styles.typeBtn + (localVehicleType === type.key ? ' ' + styles.activeVehicleType : '')}
+                onClick={() => handleVehicleTypeClick(type.key)}
+              >
+                <img src={type.icon} alt={type.label} style={{ width: 24, height: 24, marginBottom: 4 }} />
+                <span>{type.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+        {/* Search Button */}
         <button className={styles.searchButton} onClick={handleSearch}>
           Search
         </button>
-      </div>
+      </aside>
+      <main className={styles.catalogMain}>
+        {loading ? (
+          <Loader />
+        ) : (
+          <>
+            <div className={styles.campersList}>
+              {filteredCampers.length === 0 ? (
+                <p>No results found. Try adjusting your filters.</p>
+              ) : (
+                filteredCampers.slice(0, visibleCount).map((camper, idx) => (
+                  <CamperCard
+                    key={camper.id || camper._id || idx}
+                    camper={camper}
+                    isFavorite={favorites.some(f => f.id === camper.id)}
+                    toggleFavorite={handleToggleFavorite}
+                  />
+                ))
+              )}
+            </div>
+            {visibleCount < filteredCampers.length && !loading && (
+              <div className={styles.loadMoreContainer}>
+                <button className={styles.loadMoreButton} onClick={handleLoadMore}>
+                  Load More
+                </button>
+              </div>
+            )}
+          </>
+        )}
+      </main>
 
-      <div className={styles.camperList}>
-        {status === 'loading' && <Loader />}
-        {status === 'failed' && <p className={styles.error}>Error: {error}</p>}
-        {status !== 'loading' && items.length === 0 && (
-          <p>No results found. Try adjusting your filters.</p>
-        )}
-        {items.map((camper, index) => (
-          <CamperCard
-            key={camper.id || index}
-            camper={camper}
-            isFavorite={favorites.some(fav => fav.id === camper.id)}
-            toggleFavorite={(id) => dispatch(toggleFavorite(id))}
-          />
-        ))}
-
-        {hasMore && (
-          <div className={styles.loadMoreContainer}>
-            <button onClick={loadMore} className={styles.loadMoreButton} disabled={status === 'loading'}>
-              {status === 'loading' ? 'Loading...' : 'Load More'}
-            </button>
-          </div>
-        )}
-        {!hasMore && items.length > 0 && (
-          <div className={styles.loadMoreContainer}>
-            <button className={styles.loadMoreButton} disabled>
-              No more results
-            </button>
-          </div>
-        )}
-      </div>
     </div>
   );
-};
+}
 
 export default CatalogPage;

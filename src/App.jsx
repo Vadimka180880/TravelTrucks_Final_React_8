@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import HomePage from './pages/HomePage';
@@ -21,31 +20,9 @@ const App = () => {
           <Route path="/favorites" element={<FavoritesPage />} />
         </Routes>
       </div>
-      
       <ToastContainer position="top-right" autoClose={2000} />
     </Router>
   );
 };
-=======
-
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Header from './components/Header';
-import Home from './pages/Home';
-import Catalog from './pages/Catalog';
-import CamperDetails from './pages/CamperDetails';
-
-function App() {
-  return (
-    <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/catalog" element={<Catalog />} />
-        <Route path="/catalog/:id" element={<CamperDetails />} />
-      </Routes>
-    </BrowserRouter>
-  );
-}
->>>>>>> a18d4b20033625ffda6bd9b6c95a3ac7526aaffb
 
 export default App;

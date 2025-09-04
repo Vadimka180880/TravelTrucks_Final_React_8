@@ -3,16 +3,19 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styles from './CamperCard.module.css';
 
-import TransmissionIcon from '../assets/icon_item/Automatic.png';
-import KitchenIcon from '../assets/icon_item/Kitchen.png';
-import ACIcon from '../assets/icon_item/AC.png';
-import BathroomIcon from '../assets/icon_item/bathroom.png';
-import TVIcon from '../assets/icon_item/Radio.png';
-import RefrigeratorIcon from '../assets/icon_item/Container.png';
-import MicrowaveIcon from '../assets/icon_item/Microwave.png';
-import GasIcon from '../assets/icon_item/Gas.png';
-import WaterIcon from '../assets/icon_item/Container-2.png';
-import PetrolIcon from '../assets/icon_item/Petrol.png';
+
+
+import TransmissionIcon from '../assets/icon_catalog/bi_grid-1x2.svg';
+import EngineIcon from '../assets/icon_catalog/bi_grid-3x3-gap.svg';
+import ACIcon from '../assets/icon_catalog/wind.svg';
+import KitchenIcon from '../assets/icon_catalog/cup-hot.svg';
+import BathroomIcon from '../assets/icon_catalog/diagram.svg';
+import TVIcon from '../assets/icon_catalog/tv.svg';
+import RadioIcon from '../assets/icon_catalog/bi_grid.svg';
+import RefrigeratorIcon from '../assets/icon_catalog/solar_fridge-outline.svg';
+import MicrowaveIcon from '../assets/icon_catalog/lucide_microwave.svg';
+import GasIcon from '../assets/icon_catalog/hugeicons_gas-stove.svg';
+import WaterIcon from '../assets/icon_catalog/ion_water-outline.svg';
 
 import Heart from '../assets/icon_catalog/heart.svg';
 import HeartFilled from '../assets/icon_catalog/heart-filled.svg';
@@ -21,12 +24,21 @@ import Star from '../assets/icon_catalog/star.svg';
 const CamperCard = ({ camper, isFavorite, toggleFavorite }) => {
   const imageUrl = camper.gallery?.[0]?.thumb || 'default-image.jpg';
 
-  const renderFeature = (icon, label) => (
-    <div className={styles.featureItem}>
-      <img src={icon} alt={label} className={styles.icon} />
-      <span className={styles.label}>{label}</span>
-    </div>
-  );
+  // Формуємо масив бейджів-іконок згідно макету
+  // Порядок іконок як у макеті
+  const features = [
+    camper.transmission && { icon: TransmissionIcon, label: camper.transmission === 'automatic' ? 'Automatic' : camper.transmission },
+    camper.engine && { icon: EngineIcon, label: camper.engine },
+    camper.AC && { icon: ACIcon, label: 'AC' },
+    camper.kitchen && { icon: KitchenIcon, label: 'Kitchen' },
+    camper.bathroom && { icon: BathroomIcon, label: 'Bathroom' },
+    camper.TV && { icon: TVIcon, label: 'TV' },
+    camper.radio && { icon: RadioIcon, label: 'Radio' },
+    camper.refrigerator && { icon: RefrigeratorIcon, label: 'Fridge' },
+    camper.microwave && { icon: MicrowaveIcon, label: 'Microwave' },
+    camper.gas && { icon: GasIcon, label: 'Gas' },
+    camper.water && { icon: WaterIcon, label: 'Water' },
+  ].filter(Boolean);
 
   return (
     <div className={styles.camperCard}>
@@ -51,18 +63,13 @@ const CamperCard = ({ camper, isFavorite, toggleFavorite }) => {
           <span className={styles.reviewCount}>({camper.reviews?.length || 0} Reviews)</span>
         </div>
         <div className={styles.features}>
-          {renderFeature(TransmissionIcon)}
-          {camper.AC && renderFeature(ACIcon)}
-          {camper.kitchen && renderFeature(KitchenIcon)}
-          {camper.bathroom && renderFeature(BathroomIcon)}
-          {camper.TV && renderFeature(TVIcon)}
-          {camper.refrigerator && renderFeature(RefrigeratorIcon)}
-          {camper.microwave && renderFeature(MicrowaveIcon)}
-          {camper.gas && renderFeature(GasIcon)}
-          {camper.water && renderFeature(WaterIcon)}
-          {renderFeature(PetrolIcon, camper.engine)}
+          {features.map((f, idx) => (
+            <div className={styles.featureItem} key={f.label + idx}>
+              <img src={f.icon} alt={f.label} className={styles.icon} />
+              <span className={styles.label}>{f.label}</span>
+            </div>
+          ))}
         </div>
-        
         <Link to={`/catalog/${camper.id}`} className={styles.detailsLink}>
           Show more
         </Link>

@@ -15,10 +15,11 @@ const initialState = {
 
 export const fetchCampers = createAsyncThunk(
   'campers/fetchCampers',
-  async (page) => {
+  async () => {
     const response = await axios.get(
-      `https://66b1f8e71ca8ad33d4f5f63e.mockapi.io/campers?page=${page}&limit=4`
+      `https://66b1f8e71ca8ad33d4f5f63e.mockapi.io/campers`
     );
+    console.log('API response:', response.data);
     return response.data; 
   }
 );
@@ -66,14 +67,10 @@ const campersSlice = createSlice({
       })
       .addCase(fetchCampers.fulfilled, (state, action) => {
         state.status = 'succeeded';
-
         const campersArray = action.payload.items;
-
+        console.log('FULFILLED reducer campersArray:', campersArray);
         if (Array.isArray(campersArray)) {
-          state.items = [...state.items, ...campersArray];
-          if (campersArray.length < 4) {
-            state.hasMore = false;
-          }
+          state.items = campersArray;
         } else {
           state.error = 'Unexpected data format from server';
           state.hasMore = false;

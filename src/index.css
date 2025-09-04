@@ -1,28 +1,22 @@
-<<<<<<< HEAD
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-=======
->>>>>>> a18d4b20033625ffda6bd9b6c95a3ac7526aaffb
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-<<<<<<< HEAD
 html, body {
   margin: 0;
   padding: 0;
@@ -37,8 +31,6 @@ html, body {
   width: 100%;
 }
 
-=======
->>>>>>> a18d4b20033625ffda6bd9b6c95a3ac7526aaffb
 a {
   font-weight: 500;
   color: #646cff;
@@ -48,8 +40,6 @@ a:hover {
   color: #535bf2;
 }
 
-<<<<<<< HEAD
-=======
 body {
   margin: 0;
   display: flex;
@@ -58,7 +48,6 @@ body {
   min-height: 100vh;
 }
 
->>>>>>> a18d4b20033625ffda6bd9b6c95a3ac7526aaffb
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
@@ -88,28 +77,10 @@ button:focus-visible {
     color: #213547;
     background-color: #ffffff;
   }
-<<<<<<< HEAD
-
   a:hover {
     color: #747bff;
   }
-
-=======
-  a:hover {
-    color: #747bff;
-  }
->>>>>>> a18d4b20033625ffda6bd9b6c95a3ac7526aaffb
   button {
     background-color: #f9f9f9;
   }
 }
-<<<<<<< HEAD
-
-@media (min-width: 1440px) {
-  .container {
-    max-width: 1440px;
-    margin: 0 auto;
-  }
-}
-=======
->>>>>>> a18d4b20033625ffda6bd9b6c95a3ac7526aaffb

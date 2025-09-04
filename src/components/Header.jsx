@@ -1,10 +1,10 @@
-<<<<<<< HEAD
 
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import styles from './Header.module.css';
 import logo from '../assets/images/logo.png';
+
 import burgerIcon from '../assets/icon_catalog/burger.svg';
 import closeIcon from '../assets/icon_catalog/close.svg';
 
@@ -29,6 +29,7 @@ const Header = () => {
             <img src={logo} alt="Logo" className={styles.logo} />
           </Link>
         </div>
+       
         <button className={styles.burger} onClick={toggleMenu} aria-label="Toggle menu">
           <img
             src={isMobileMenuOpen ? closeIcon : burgerIcon}
@@ -36,13 +37,30 @@ const Header = () => {
             className={styles.icon}
           />
         </button>
+      
         <nav className={`${styles.nav} ${isMobileMenuOpen ? styles.open : ''}`}>
           <ul className={styles.navList}>
             <li>
-              <Link to="/" className={styles.navLink} onClick={closeMenu}>Home</Link>
+              <Link
+                to="/"
+                className={
+                  styles.navLink + (location.pathname === '/' ? ' ' + styles.navLinkActive : '')
+                }
+                onClick={closeMenu}
+              >
+                Home
+              </Link>
             </li>
             <li>
-              <Link to="/catalog" className={styles.navLink} onClick={closeMenu}>Catalog</Link>
+              <Link
+                to="/catalog"
+                className={
+                  styles.navLink + (location.pathname.startsWith('/catalog') ? ' ' + styles.navLinkActive : '')
+                }
+                onClick={closeMenu}
+              >
+                Catalog
+              </Link>
             </li>
             {favorites && favorites.length > 0 && (
               <li>
@@ -57,16 +75,3 @@ const Header = () => {
 };
 
 export default Header;
-=======
-// Хедер для навігації
-import { Link } from 'react-router-dom';
-export default function Header() {
-  return (
-    <header style={{ padding: '16px', borderBottom: '1px solid #eee' }}>
-      <nav>
-        <Link to="/">Home</Link> | <Link to="/catalog">Catalog</Link>
-      </nav>
-    </header>
-  );
-}
->>>>>>> a18d4b20033625ffda6bd9b6c95a3ac7526aaffb

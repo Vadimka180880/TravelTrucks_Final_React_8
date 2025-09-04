@@ -4,11 +4,10 @@ import styles from './HomePage.module.css';
 import mainPhoto from '../assets/images/banner.jpg';
 import mainPhoto2x from '../assets/images/banner@2x.jpg';
 
-
 const HomePage = () => {
   return (
     <div className={styles.homePage}>
-      <div className={styles.heroWrapper}>
+  <div className={styles.heroWrapper}>
         <div className={styles.heroSection}>
           <img
             src={mainPhoto}
@@ -16,9 +15,8 @@ const HomePage = () => {
             alt="Campers"
             className={styles.heroImage}
           />
-          <div className={styles.overlay}></div>
           <div className={styles.heroContent}>
-            <h1>Campers of your dreams</h1>
+            <h1>Campers of Your Dreams</h1>
             <p>You can find everything you want in our catalog.</p>
             <Link to="/catalog" className={styles.ctaButton}>
               View Now
