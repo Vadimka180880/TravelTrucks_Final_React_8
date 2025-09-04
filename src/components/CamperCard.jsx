@@ -9,7 +9,7 @@ import TransmissionIcon from '../assets/icon_catalog/bi_grid-1x2.svg';
 import EngineIcon from '../assets/icon_catalog/bi_grid-3x3-gap.svg';
 import ACIcon from '../assets/icon_catalog/wind.svg';
 import KitchenIcon from '../assets/icon_catalog/cup-hot.svg';
-import BathroomIcon from '../assets/icon_catalog/diagram.svg';
+import BathroomIcon from '../assets/icon_catalog/bathroom.svg';
 import TVIcon from '../assets/icon_catalog/tv.svg';
 import RadioIcon from '../assets/icon_catalog/bi_grid.svg';
 import RefrigeratorIcon from '../assets/icon_catalog/solar_fridge-outline.svg';
@@ -63,12 +63,15 @@ const CamperCard = ({ camper, isFavorite, toggleFavorite }) => {
           <span className={styles.reviewCount}>({camper.reviews?.length || 0} Reviews)</span>
         </div>
         <div className={styles.features}>
-          {features.map((f, idx) => (
-            <div className={styles.featureItem} key={f.label + idx}>
-              <img src={f.icon} alt={f.label} className={styles.icon} />
-              <span className={styles.label}>{f.label}</span>
-            </div>
-          ))}
+          {features.map((f, idx) => {
+            const isBathroom = f.label === 'Bathroom';
+            return (
+              <div className={styles.featureItem} key={f.label + idx}>
+                <img src={f.icon} alt={f.label} className={isBathroom ? `${styles.icon} ${styles.iconBathroom}` : styles.icon} />
+                <span className={styles.label}>{f.label}</span>
+              </div>
+            );
+          })}
         </div>
         <Link to={`/catalog/${camper.id}`} className={styles.detailsLink}>
           Show more

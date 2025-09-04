@@ -15,18 +15,68 @@
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 32px;
   margin-bottom: 40px;
 }
 
 /* Each filter block */
 .filterBlock {
   margin-bottom: 0;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  padding: 20px 24px;
-  background: #fafbfc;
+  padding: 0 0 8px 0;
+  background: transparent;
+  position: relative;
 }
+
+/* Underline separator for each filter block */
+/* removed previous automatic separator; now underline is tied to titles */
+
+.filtersHeading {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #475467;
+  margin: 8px 0 8px 0;
+  position: static;
+  padding: 0;
+}
+
+/* Section title with underline */
+.sectionTitle {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  color: #101828;
+  margin: 0 0 12px 0;
+  position: relative;
+  padding-bottom: 12px;
+}
+.sectionTitle::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: #dadde1;
+}
+
+.filterLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: #101828;
+  margin: 0 0 12px 0;
+}
+
+.locationInput {
+  width: 100%;
+  padding: 14px 16px;
+  border: none;
+  border-radius: 12px;
+  background: #f2f4f7;
+  font-size: 14px;
+  outline: none;
+}
+.locationInput:focus { background:#eef1f4; }
 .catalogPage {
   display: flex;
   gap: 40px;
@@ -61,33 +111,28 @@
   color: #333;
 }
 
-.vehicleTypeIcons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
+.vehicleTypeIcons { display:flex; gap:12px; }
 .vehicleTypeIcons button {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 10px;
-  background-color: #f8f9fa;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  gap: 8px;
+  padding: 12px 18px;
+  background: #fff;
+  border: 1px solid #dadde1;
+  border-radius: 12px;
   cursor: pointer;
-  width: 120px;
-  height: 48px;
   font-size: 14px;
   font-weight: 500;
-  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  transition: all 0.25s ease;
+  color: #101828;
+  height: 56px;
 }
-
+.vehicleTypeIcons button img { width:24px; height:24px; }
 .vehicleTypeIcons button.activeVehicleType {
-  background-color: #FF6347;
-  color: white;
-  border-color: #FF6347;
+  border: 2px solid #e44848;
+  background:#fff;
+  color:#e44848;
+  font-weight:600;
 }
 
 .iconGrid {
@@ -102,16 +147,16 @@
   align-items: center;
   justify-content: center;
   padding: 10px 0 6px 0;
-  border: 1.5px solid #e0e0e0;
-  border-radius: 16px;
-  background-color: #f2f4f7;
+  border: 1.5px solid #dadde1;
+  border-radius: 12px;
+  background-color: #fff;
   cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 1rem;
+  transition: all 0.25s ease;
+  font-size: 14px;
   color: #101828;
   text-align: center;
   width: 100%;
-  height: 64px;
+  height: 72px;
   box-shadow: none;
 }
 
@@ -126,6 +171,7 @@
   padding: 2px;
 }
 
+
 .iconButton.active {
   border: 2px solid #e44848;
   background-color: #fff;
@@ -133,45 +179,34 @@
   font-weight: 600;
 }
 
+/* Specific size tweak for bathroom icon per design */
+.bathroomIcon { width:31px !important; height:27px !important; }
+
 .searchButton {
-  padding: 14px 0;
+  padding: 16px 60px;
   background-color: #e44848;
   color: #fff;
   border: none;
   border-radius: 200px;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 16px;
   cursor: pointer;
-  margin: 24px 0 0 0;
-  width: 100%;
-  align-self: flex-end;
+  margin: 8px 0 0 0;
+  width: auto;
+  align-self: flex-start;
   box-shadow: 0 1px 2px rgba(16,24,40,0.03);
   transition: background 0.2s;
 }
-
-.searchButton:hover {
-  background-color: #d84343;
-}
-
-.camperList {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  flex-grow: 1;
-  max-width: 100%;
-}
-
-.camperList img {  
-  object-fit: cover;
-  border-radius: 8px;
-}
+.searchButton:hover { background-color:#d84343; }
 
 .loadMoreContainer {
   display: flex;
   justify-content: center;
-  margin-top: 30px;
+  margin-top: 32px;
   width: 100%;
 }
+
+.campersList { display:flex; flex-direction:column; gap:32px; }
 
 .loadMoreButton {
   padding: 12px 24px;

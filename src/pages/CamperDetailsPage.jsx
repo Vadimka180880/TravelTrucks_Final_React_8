@@ -11,7 +11,7 @@ import Star from '../assets/icon_catalog/star.svg';
 import TransmissionIcon from '../assets/icon_item/Automatic.png';
 import KitchenIcon from '../assets/icon_item/Kitchen.png';
 import ACIcon from '../assets/icon_item/AC.png';
-import BathroomIcon from '../assets/icon_item/bathroom.png';
+import BathroomIcon from '../assets/icon_catalog/bathroom.svg';
 import TVIcon from '../assets/icon_item/Radio.png';
 import RefrigeratorIcon from '../assets/icon_item/Container.png';
 import MicrowaveIcon from '../assets/icon_item/Microwave.png';
@@ -119,12 +119,15 @@ const CamperDetailsPage = () => {
           {activeTab === 'features' && (
             <>
               <div className={styles.featureList}>
-                {features.map((f, idx) => (
-                  <div key={idx} className={styles.featureItem}>
-                    <img src={f.icon} alt={f.label} />
-                    <span>{f.label}</span>
-                  </div>
-                ))}
+                {features.map((f, idx) => {
+                  const isBathroom = f.label === 'Bathroom';
+                  return (
+                    <div key={idx} className={styles.featureItem}>
+                      <img src={f.icon} alt={f.label} className={isBathroom ? styles.iconLarge : ''} />
+                      <span>{f.label}</span>
+                    </div>
+                  );
+                })}
               </div>
 
               <table className={styles.detailsTable}>

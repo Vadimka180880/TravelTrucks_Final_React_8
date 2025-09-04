@@ -7,7 +7,8 @@ import Loader from '../components/Loader';
 
 import ACIcon from '../assets/icon_catalog/wind.svg';
 import KitchenIcon from '../assets/icon_catalog/cup-hot.svg';
-import BathroomIcon from '../assets/icon_catalog/diagram.svg';
+import AutomaticIcon from '../assets/icon_catalog/diagram.svg';
+import BathroomIcon from '../assets/icon_item/bathroom.png';
 import TVIcon from '../assets/icon_catalog/tv.svg';
 import RadioIcon from '../assets/icon_catalog/bi_grid.svg';
 import FridgeIcon from '../assets/icon_catalog/solar_fridge-outline.svg';
@@ -51,9 +52,10 @@ const CatalogPage = () => {
 
   const equipmentList = [
     { key: 'AC', label: 'AC', icon: ACIcon },
+    { key: 'automatic', label: 'Automatic', icon: AutomaticIcon },
     { key: 'kitchen', label: 'Kitchen', icon: KitchenIcon },
-    { key: 'bathroom', label: 'Bathroom', icon: BathroomIcon },
     { key: 'TV', label: 'TV', icon: TVIcon },
+    { key: 'bathroom', label: 'Bathroom', icon: BathroomIcon },
     { key: 'radio', label: 'Radio', icon: RadioIcon },
     { key: 'refrigerator', label: 'Fridge', icon: FridgeIcon },
     { key: 'microwave', label: 'Microwave', icon: MicrowaveIcon },
@@ -61,10 +63,11 @@ const CatalogPage = () => {
     { key: 'water', label: 'Water', icon: WaterIcon },
   ];
 
+  // Swapped icons for Fully Integrated and Alcove per design correction
   const vehicleTypes = [
     { key: 'panelTruck', label: 'Van', icon: VanIcon },
-    { key: 'fullyIntegrated', label: 'Fully Integrated', icon: FullyIntegratedIcon },
-    { key: 'alcove', label: 'Alcove', icon: AlcoveIcon },
+    { key: 'fullyIntegrated', label: 'Fully Integrated', icon: AlcoveIcon },
+    { key: 'alcove', label: 'Alcove', icon: FullyIntegratedIcon },
   ];
 
   const handleEquipmentClick = (key) => {
@@ -127,9 +130,10 @@ const CatalogPage = () => {
             onChange={e => setLocalLocation(e.target.value)}
           />
         </div>
+        <h3 className={styles.filtersHeading}>Filters</h3>
         {/* Vehicle equipment */}
         <div className={styles.filterBlock}>
-          <div className={styles.filterLabel}>Vehicle equipment</div>
+          <div className={styles.sectionTitle}>Vehicle equipment</div>
           <div className={styles.iconGrid}>
             {equipmentList.map((item) => (
               <button
@@ -141,7 +145,11 @@ const CatalogPage = () => {
                 type="button"
                 onClick={() => handleEquipmentClick(item.key)}
               >
-                <img src={item.icon} alt={item.label} />
+                <img
+                  src={item.icon}
+                  alt={item.label}
+                  className={item.key === 'bathroom' ? styles.bathroomIcon : ''}
+                />
                 <span>{item.label}</span>
               </button>
             ))}
@@ -149,7 +157,7 @@ const CatalogPage = () => {
         </div>
         {/* Vehicle type */}
         <div className={styles.filterBlock}>
-          <div className={styles.filterLabel}>Vehicle type</div>
+          <div className={styles.sectionTitle}>Vehicle type</div>
           <div className={styles.vehicleTypeIcons}>
             {vehicleTypes.map((type) => (
               <button
