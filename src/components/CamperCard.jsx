@@ -5,14 +5,13 @@ import styles from './CamperCard.module.css';
 
 
 
-import TransmissionIcon from '../assets/icon_catalog/bi_grid-1x2.svg';
-import EngineIcon from '../assets/icon_catalog/bi_grid-3x3-gap.svg';
+// Feature icons (summary row) aligned with design: Automatic, fuel, AC, Kitchen, Radio, Microwave, Gas/Water
+// SVG іконки (чіткіші й відповідають стилю sidebar)
+import AutomaticIcon from '../assets/icon_catalog/diagram.svg';
+import FuelIcon from '../assets/icon_item/Petrol.png'; // іконка типу пального (використовуємо і для diesel)
 import ACIcon from '../assets/icon_catalog/wind.svg';
 import KitchenIcon from '../assets/icon_catalog/cup-hot.svg';
-import BathroomIcon from '../assets/icon_catalog/bathroom.svg';
-import TVIcon from '../assets/icon_catalog/tv.svg';
-import RadioIcon from '../assets/icon_catalog/bi_grid.svg';
-import RefrigeratorIcon from '../assets/icon_catalog/solar_fridge-outline.svg';
+import RadioIcon from '../assets/icon_item/Radio.png';
 import MicrowaveIcon from '../assets/icon_catalog/lucide_microwave.svg';
 import GasIcon from '../assets/icon_catalog/hugeicons_gas-stove.svg';
 import WaterIcon from '../assets/icon_catalog/ion_water-outline.svg';
@@ -25,20 +24,29 @@ import { formatPrice } from '../utils/formatPrice';
 const CamperCard = ({ camper, isFavorite, toggleFavorite }) => {
   const imageUrl = camper.gallery?.[0]?.thumb || 'default-image.jpg';
 
-  // Формуємо масив бейджів-іконок згідно макету
-  // Порядок іконок як у макеті
+  // Форматування локації: місто, потім країна (якщо приходить "Ukraine, Kyiv")
+  const displayLocation = React.useMemo(() => {
+    if (!camper.location) return '';
+    const parts = camper.location.split(',').map(p => p.trim());
+    if (parts.length === 2 && parts[0].toLowerCase() === 'ukraine') {
+      return `${parts[1]}, Ukraine`;
+    }
+    return camper.location;
+  }, [camper.location]);
+
+  // Порядок і підбір іконок скорочено до набору з макету (без Bathroom, TV, Refrigerator у короткій картці)
+  const capitalize = (str) => str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
+
+  // Only transmission badge shows text; other features are icon-only
   const features = [
-    camper.transmission && { icon: TransmissionIcon, label: camper.transmission === 'automatic' ? 'Automatic' : camper.transmission },
-    camper.engine && { icon: EngineIcon, label: camper.engine },
-    camper.AC && { icon: ACIcon, label: 'AC' },
-    camper.kitchen && { icon: KitchenIcon, label: 'Kitchen' },
-    camper.bathroom && { icon: BathroomIcon, label: 'Bathroom' },
-    camper.TV && { icon: TVIcon, label: 'TV' },
-    camper.radio && { icon: RadioIcon, label: 'Radio' },
-    camper.refrigerator && { icon: RefrigeratorIcon, label: 'Fridge' },
-    camper.microwave && { icon: MicrowaveIcon, label: 'Microwave' },
-    camper.gas && { icon: GasIcon, label: 'Gas' },
-    camper.water && { icon: WaterIcon, label: 'Water' },
+    camper.transmission && { icon: AutomaticIcon, label: 'Automatic' },
+    camper.engine && { icon: FuelIcon },
+    camper.AC && { icon: ACIcon },
+    camper.kitchen && { icon: KitchenIcon },
+    camper.radio && { icon: RadioIcon },
+    camper.microwave && { icon: MicrowaveIcon },
+    camper.gas && { icon: GasIcon },
+    camper.water && { icon: WaterIcon },
   ].filter(Boolean);
 
   return (
@@ -57,22 +65,22 @@ const CamperCard = ({ camper, isFavorite, toggleFavorite }) => {
             />
           </div>
         </div>
-        <p className={styles.location}>{camper.location}</p>
         <div className={styles.ratingRow}>
           <img src={Star} alt="Rating" className={styles.starIcon} />
           <span className={styles.rating}>{camper.rating}</span>
           <span className={styles.reviewCount}>({camper.reviews?.length || 0} Reviews)</span>
+          <span className={styles.location}>{displayLocation}</span>
         </div>
+        <p className={styles.description}>
+          The pictures shown here are example vehicles of the respective...
+        </p>
         <div className={styles.features}>
-          {features.map((f, idx) => {
-            const isBathroom = f.label === 'Bathroom';
-            return (
-              <div className={styles.featureItem} key={f.label + idx}>
-                <img src={f.icon} alt={f.label} className={isBathroom ? `${styles.icon} ${styles.iconBathroom}` : styles.icon} />
-                <span className={styles.label}>{f.label}</span>
-              </div>
-            );
-          })}
+          {features.map((f, idx) => (
+            <div className={styles.featureItem} key={idx}>
+              <img src={f.icon} alt={f.label || ''} className={styles.icon} />
+              {f.label && <span className={styles.label}>{f.label}</span>}
+            </div>
+          ))}
         </div>
         <Link to={`/catalog/${camper.id}`} className={styles.detailsLink}>
           Show more

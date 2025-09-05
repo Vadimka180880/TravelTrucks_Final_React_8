@@ -42,6 +42,10 @@
     font-size: 14px;
     margin: 0;
   }
+
+  .location {
+    color: #475467;
+  }
   
   .rating {
     display: flex;
@@ -65,10 +69,13 @@
     gap: 8px;
   }
   
-  .price {
-    font-size: 20px;
-    font-weight: 700;
+  .camperCard .price {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 24px; /* Figma: H2 24px */
+    font-weight: 600; /* Semi Bold */
+    line-height: 32px;
     color: #101828;
+    letter-spacing: 0;
   }
   .priceFavoriteWrapper {
     display: flex;
@@ -90,37 +97,32 @@
     transform: scale(1.1);
   }
   
-  .features {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
   
   .featureItem {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 14px;
+    gap: 8px; /* design gap */
+    padding: 12px 18px; /* top/right/bottom/left */
     background-color: #f2f4f7;
     border-radius: 100px;
     font-size: 14px;
     color: #101828;
+    line-height: 20px;
+    min-height: 48px; /* capsule height */
+    mix-blend-mode: multiply;
   }
   
   .icon {
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     flex-shrink: 0;
     object-fit: contain;
-    background: #fff;
-    border-radius: 6px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-    padding: 2px;
-  }
-
-  .iconBathroom {
-    width:31px;
-    height:27px;
+    display: block;
   }
   
   .label {

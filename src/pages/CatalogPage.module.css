@@ -2,7 +2,7 @@
 .catalogPageWrapper {
   display: flex;
   gap: 40px;
-  padding: 40px 0 0 0;
+  padding: 40px 0 0 0; /* no side padding so edges align with header container */
   max-width: 1200px;
   margin: 0 auto;
   background: #fff;
