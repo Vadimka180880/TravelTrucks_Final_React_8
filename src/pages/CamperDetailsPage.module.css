@@ -19,6 +19,8 @@
   margin-bottom: 8px;
 }
 
+.reviewsCount { color: #666; font-size: 14px; }
+
 .locationRow {
   display: flex;
   align-items: center;
@@ -87,18 +89,65 @@
 .featureItem {
   background: #f2f4f7;
   border-radius: 12px;
-  padding: 8px 12px;
+  padding: 6px 12px;
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 14px;
-  color: #333;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #101828;
+  min-width: auto;
 }
 
-.featureItem img {
-  width: 22px;
-  height: 22px;
-  object-fit: contain;
+.featureItem img { object-fit: contain; }
+
+.icon { width: 20px !important; height: 20px !important; object-fit: contain; display: inline-block; }
+
+.rasterIcon { transform: none !important; display: inline-block; vertical-align: middle; }
+
+.label {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #101828;
+}
+
+.tabs {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 12px;
+}
+
+.tabs button {
+  background: none;
+  border: none;
+  padding: 8px 0;
+  font-weight: 600;
+  cursor: pointer;
+  color: #333;
+  position: relative;
+}
+
+.tabs button:focus { outline: none; }
+
+.activeTab {
+  color: #e44848;
+}
+
+.activeTab::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -12px;
+  width: 48px;
+  height: 4px;
+  background: #e44848;
+  border-radius: 2px;
 }
 
 .iconLarge { width:31px !important; height:27px !important; }

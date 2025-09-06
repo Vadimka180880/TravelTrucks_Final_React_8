@@ -12,13 +12,13 @@ const ReviewsPage = () => {
 
   return (
     <div className={styles.reviewsPage}>
-      <h2>Reviews for {camper.name}</h2>
-      {camper.reviews.map((review, index) => (
-        <div key={index} className={styles.review}>
-          <p>{review.comment}</p>
-          <p>Rating: {'⭐'.repeat(review.reviewer_rating)}</p>
-        </div>
-      ))}
+        <h2>Reviews for {camper.name}</h2>
+        {camper.reviews.map((review, index) => (
+          <div key={index} className={styles.review}>
+            <p>{review.comment}</p>
+            <p>Rating: {'⭐'.repeat(review.reviewer_rating)}</p>
+          </div>
+        ))}
     </div>
   );
 };

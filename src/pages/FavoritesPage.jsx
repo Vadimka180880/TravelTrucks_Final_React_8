@@ -3,7 +3,6 @@ import CamperCard from '../components/CamperCard';
 import styles from './FavoritesPage.module.css';
 import { toggleFavorite } from '../store/slices/campersSlice';
 import { toast } from 'react-toastify';
-
 const FavoritesPage = () => {
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.campers.favorites);
@@ -18,21 +17,21 @@ const FavoritesPage = () => {
 
   return (
     <div className={styles.favoritesPage}>
-      <h1>Your Favorites</h1>
-      {favorites.length === 0 ? (
-        <p className={styles.empty}>No favorites yet</p>
-      ) : (
-        <div className={styles.camperList}>
-          {favorites.map((camper) => (
-            <CamperCard
-              key={camper.id}
-              camper={camper}
-              isFavorite={true}
-              toggleFavorite={handleToggleFavorite}
-            />
-          ))}
-        </div>
-      )}
+        <h1>Your Favorites</h1>
+        {favorites.length === 0 ? (
+          <p className={styles.empty}>No favorites yet</p>
+        ) : (
+          <div className={styles.camperList}>
+            {favorites.map((camper) => (
+              <CamperCard
+                key={camper.id}
+                camper={camper}
+                isFavorite={true}
+                toggleFavorite={handleToggleFavorite}
+              />
+            ))}
+          </div>
+        )}
     </div>
   );
 };

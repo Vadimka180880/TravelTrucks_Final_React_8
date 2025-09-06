@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import styles from './CamperCard.module.css';
 
 import AutomaticIcon from '../assets/icon_catalog/diagram.svg';
-import FuelIcon from '../assets/icon_item/Petrol.png';
+import FuelIcon from '../assets/icon_catalog/Petrol.svg';
 import ACIcon from '../assets/icon_catalog/wind.svg';
 import KitchenIcon from '../assets/icon_catalog/cup-hot.svg';
-import RadioIcon from '../assets/icon_item/Radio.png';
+import RadioIcon from '../assets/icon_catalog/Radio.svg';
 import MicrowaveIcon from '../assets/icon_catalog/lucide_microwave.svg';
 import GasIcon from '../assets/icon_catalog/hugeicons_gas-stove.svg';
 import WaterIcon from '../assets/icon_catalog/ion_water-outline.svg';
@@ -32,14 +32,14 @@ const CamperCard = ({ camper, isFavorite, toggleFavorite }) => {
   const capitalize = (str) => str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
 
   const features = [
-    camper.transmission && { icon: AutomaticIcon, label: 'Automatic' },
-    camper.engine && { icon: FuelIcon },
-    camper.AC && { icon: ACIcon, label: 'AC' },
-    camper.kitchen && { icon: KitchenIcon, label: 'Kitchen' },
-    camper.radio && { icon: RadioIcon },
-    camper.microwave && { icon: MicrowaveIcon, label: 'Microwave' },
-    camper.gas && { icon: GasIcon, label: 'Gas' },
-    camper.water && { icon: WaterIcon, label: 'Water' },
+    camper.transmission && { icon: AutomaticIcon, label: capitalize(camper.transmission), isSvg: true },
+    camper.engine && { icon: FuelIcon, label: (camper.engine || 'Fuel'), isSvg: true },
+    camper.AC && { icon: ACIcon, label: 'AC', isSvg: true },
+    camper.kitchen && { icon: KitchenIcon, label: 'Kitchen', isSvg: true },
+  camper.radio && { icon: RadioIcon, label: 'Radio', isSvg: true },
+    camper.microwave && { icon: MicrowaveIcon, label: 'Microwave', isSvg: true },
+    camper.gas && { icon: GasIcon, label: 'Gas', isSvg: true },
+    camper.water && { icon: WaterIcon, label: 'Water', isSvg: true },
   ].filter(Boolean);
 
   return (
@@ -68,12 +68,23 @@ const CamperCard = ({ camper, isFavorite, toggleFavorite }) => {
           The pictures shown here are example vehicles of the respective...
         </p>
         <div className={styles.features}>
-          {features.map((f, idx) => (
-            <div className={styles.featureItem} key={idx}>
-              <img src={f.icon} alt={f.label || ''} className={styles.icon} />
-              {f.label && <span className={styles.label}>{f.label}</span>}
-            </div>
-          ))}
+          {features.map((f, idx) => {
+            const isPng = (typeof f.icon === 'string' && f.icon.endsWith('.png'));
+            const classes = [styles.icon];
+            if (isPng) classes.push(styles.rasterIcon);
+            if (f.icon === RadioIcon) classes.push(styles.radio);
+            if (f.icon === FuelIcon) classes.push(styles.petrol);
+            return (
+              <div className={styles.featureItem} key={idx}>
+                {f.isComponent ? (
+                  <f.icon className={classes.join(' ')} />
+                ) : (
+                  <img src={f.icon} alt={f.label || ''} className={classes.join(' ')} />
+                )}
+                {f.label && <span className={styles.label}>{f.label}</span>}
+              </div>
+            );
+          })}
         </div>
         <Link to={`/catalog/${camper.id}`} className={styles.detailsLink}>
           Show more

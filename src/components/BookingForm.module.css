@@ -30,6 +30,32 @@
   border: 1px solid #ccc;
 }
 
+.react-datepicker-wrapper { width: 100%; }
+.react-datepicker__input-container input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #e0e6eb;
+}
+
+.react-datepicker {
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(16,24,40,0.08);
+  border: 1px solid #e6edf2;
+}
+
+.react-datepicker__header {
+  background: #fff;
+  border-bottom: 1px solid #eef3f6;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+  background: #e44848;
+  color: #fff;
+  border-radius: 50%;
+}
+
 .buttonGroup {
   margin-top: 20px;
 }

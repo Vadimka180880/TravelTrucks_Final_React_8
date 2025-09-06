@@ -1,15 +1,13 @@
-/* Wrapper for the whole catalog page */
 .catalogPageWrapper {
   display: flex;
   gap: 40px;
-  padding: 40px 0 0 0; /* no side padding so edges align with header container */
+  padding: 40px 0 0 0; 
   max-width: 1200px;
   margin: 0 auto;
   background: #fff;
   min-height: 100vh;
 }
 
-/* Sidebar with filters */
 .filterSidebar {
   width: 340px;
   flex-shrink: 0;
@@ -19,16 +17,13 @@
   margin-bottom: 40px;
 }
 
-/* Each filter block */
+
 .filterBlock {
   margin-bottom: 0;
   padding: 0 0 8px 0;
   background: transparent;
   position: relative;
 }
-
-/* Underline separator for each filter block */
-/* removed previous automatic separator; now underline is tied to titles */
 
 .filtersHeading {
   font-size: 14px;
@@ -40,7 +35,6 @@
   padding: 0;
 }
 
-/* Section title with underline */
 .sectionTitle {
   font-size: 16px;
   font-weight: 500;
@@ -179,7 +173,7 @@
   font-weight: 600;
 }
 
-/* Specific size tweak for bathroom icon per design */
+
 .bathroomIcon { width:31px !important; height:27px !important; }
 
 .searchButton {
@@ -209,13 +203,23 @@
 .campersList { display:flex; flex-direction:column; gap:32px; }
 
 .loadMoreButton {
-  padding: 12px 24px;
-  background-color: #FF6347;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
+ width: 145;
+height: 56;
+opacity: 1;
+top: 20px;
+left: 20px;
+border-radius: 200px;
+padding-top: 16px;
+padding-right: 32px;
+padding-bottom: 16px;
+padding-left: 32px;
+gap: 10px;
+border: 1px solid #DADDE1;
+transition: background-color 0.3s ease;
+}
+
+.loadMoreButton:hover {
+  border: 1px solid #D84343
 }
 
 .loadMoreButton:disabled {
@@ -258,15 +262,3 @@
   }
 }
 
-header {
-  position: sticky;
-  top: 0;
-  background-color: white;
-  z-index: 1000;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-}
-
-nav {
-  display: flex;
-  justify-content: center;
-}

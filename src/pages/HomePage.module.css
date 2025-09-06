@@ -69,17 +69,24 @@
     max-width: max-content;
     white-space: nowrap;
     padding: 15px 30px;
-    background-color: #FF6347;
+    background-color: #E44848;;
     color: white;
     text-decoration: none;
     border-radius: 50px;
     font-size: 1.2rem;
     transition: background-color 0.3s ease;
     font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 16px; 
+    line-height: 24px;
+    letter-spacing: -0.5%;
+    vertical-align: middle;
   }
   
   .ctaButton:hover {
-    background-color: #FF4500;
+    background-color: #D84343;
+;
   }
 
   @media (max-width: 768px) {

@@ -7,17 +7,17 @@ import styles from './CamperDetailsPage.module.css';
 
 import Star from '../assets/icon_catalog/star.svg';
 
-// Icons
-import TransmissionIcon from '../assets/icon_item/Automatic.png';
-import KitchenIcon from '../assets/icon_item/Kitchen.png';
-import ACIcon from '../assets/icon_item/AC.png';
+import TransmissionIcon from '../assets/icon_catalog/diagram.svg';
+import KitchenIcon from '../assets/icon_catalog/cup-hot.svg';
+import ACIcon from '../assets/icon_catalog/wind.svg';
 import BathroomIcon from '../assets/icon_catalog/bathroom.svg';
-import TVIcon from '../assets/icon_item/Radio.png';
-import RefrigeratorIcon from '../assets/icon_item/Container.png';
-import MicrowaveIcon from '../assets/icon_item/Microwave.png';
-import GasIcon from '../assets/icon_item/Gas.png';
-import WaterIcon from '../assets/icon_item/Container-2.png';
-import PetrolIcon from '../assets/icon_item/Petrol.png';
+import TVIcon from '../assets/icon_catalog/tv.svg';
+import RefrigeratorIcon from '../assets/icon_catalog/solar_fridge-outline.svg';
+import MicrowaveIcon from '../assets/icon_catalog/lucide_microwave.svg';
+import GasIcon from '../assets/icon_catalog/hugeicons_gas-stove.svg';
+import WaterIcon from '../assets/icon_catalog/ion_water-outline.svg';
+import PetrolIcon from '../assets/icon_catalog/Petrol.svg';
+import RadioIcon from '../assets/icon_catalog/Radio.svg';
 import { formatPrice } from '../utils/formatPrice';
 
 const CamperDetailsPage = () => {
@@ -32,16 +32,16 @@ const CamperDetailsPage = () => {
   if (!camper) return <p>Camper not found</p>;
 
   const features = [
-    { icon: TransmissionIcon, label: camper.transmission },
-    camper.AC && { icon: ACIcon },
-    camper.kitchen && { icon: KitchenIcon },
-    camper.bathroom && { icon: BathroomIcon },
-    camper.TV && { icon: TVIcon },
-    camper.refrigerator && { icon: RefrigeratorIcon },
-    camper.microwave && { icon: MicrowaveIcon },
-    camper.gas && { icon: GasIcon },
-    camper.water && { icon: WaterIcon },
-    { icon: PetrolIcon, label: camper.engine },
+    { icon: TransmissionIcon, label: camper.transmission || 'Automatic', isSvg: true },
+    camper.AC && { icon: ACIcon, label: 'AC', isSvg: true },
+    camper.kitchen && { icon: KitchenIcon, label: 'Kitchen', isSvg: true },
+    camper.bathroom && { icon: BathroomIcon, label: 'Bathroom', isSvg: true },
+    camper.TV && { icon: TVIcon, label: 'TV', isSvg: true },
+    camper.refrigerator && { icon: RefrigeratorIcon, label: 'Fridge', isSvg: true },
+  camper.microwave && { icon: MicrowaveIcon, label: 'Microwave', isSvg: true },
+  camper.gas && { icon: GasIcon, label: 'Gas', isSvg: true },
+  camper.water && { icon: WaterIcon, label: 'Water', isSvg: true },
+  { icon: PetrolIcon, label: camper.engine || 'Engine', isSvg: true },
   ].filter(Boolean);
 
   const handleNextImage = () => {
@@ -70,8 +70,13 @@ const CamperDetailsPage = () => {
         <div className={styles.ratingRow}>
           <img src={Star} alt="Rating" className={styles.starIcon} />
           <span className={styles.rating}>{camper.rating}</span>
-          <span className={styles.reviews}>({camper.reviews.length} Reviews)</span>
-          <span className={styles.location}>📍 {camper.location}</span>
+          <span className={styles.reviewsCount}>({camper.reviews.length} Reviews)</span>
+          <span className={styles.location}>📍 {
+            (() => {
+              const loc = (camper.location || '').split(',').map(s => s.trim());
+              return loc.length === 2 ? `${loc[1]}, ${loc[0]}` : camper.location;
+            })()
+          }</span>
         </div>
   <p className={styles.price}>€{formatPrice(camper.price)}</p>
       </div>
@@ -122,11 +127,18 @@ const CamperDetailsPage = () => {
               <div className={styles.featureList}>
                 {features.map((f, idx) => {
                   const isBathroom = f.label === 'Bathroom';
+                  const classNames = [styles.icon];
+                  if (isBathroom) classNames.push(styles.iconLarge);
+                  if (f.icon === PetrolIcon) classNames.push(styles.petrol);
                   return (
-                    <div key={idx} className={styles.featureItem}>
-                      <img src={f.icon} alt={f.label} className={isBathroom ? styles.iconLarge : ''} />
-                      <span>{f.label}</span>
-                    </div>
+                        <div key={idx} className={styles.featureItem}>
+                          {f.isComponent ? (
+                            <f.icon className={classNames.join(' ')} />
+                          ) : (
+                            <img src={f.icon} alt={f.label} className={classNames.join(' ')} />
+                          )}
+                          <span className={styles.label}>{f.label}</span>
+                        </div>
                   );
                 })}
               </div>
