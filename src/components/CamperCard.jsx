@@ -3,12 +3,8 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styles from './CamperCard.module.css';
 
-
-
-// Feature icons (summary row) aligned with design: Automatic, fuel, AC, Kitchen, Radio, Microwave, Gas/Water
-// SVG іконки (чіткіші й відповідають стилю sidebar)
 import AutomaticIcon from '../assets/icon_catalog/diagram.svg';
-import FuelIcon from '../assets/icon_item/Petrol.png'; // іконка типу пального (використовуємо і для diesel)
+import FuelIcon from '../assets/icon_item/Petrol.png';
 import ACIcon from '../assets/icon_catalog/wind.svg';
 import KitchenIcon from '../assets/icon_catalog/cup-hot.svg';
 import RadioIcon from '../assets/icon_item/Radio.png';
@@ -24,7 +20,6 @@ import { formatPrice } from '../utils/formatPrice';
 const CamperCard = ({ camper, isFavorite, toggleFavorite }) => {
   const imageUrl = camper.gallery?.[0]?.thumb || 'default-image.jpg';
 
-  // Форматування локації: місто, потім країна (якщо приходить "Ukraine, Kyiv")
   const displayLocation = React.useMemo(() => {
     if (!camper.location) return '';
     const parts = camper.location.split(',').map(p => p.trim());
@@ -34,19 +29,17 @@ const CamperCard = ({ camper, isFavorite, toggleFavorite }) => {
     return camper.location;
   }, [camper.location]);
 
-  // Порядок і підбір іконок скорочено до набору з макету (без Bathroom, TV, Refrigerator у короткій картці)
   const capitalize = (str) => str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
 
-  // Only transmission badge shows text; other features are icon-only
   const features = [
     camper.transmission && { icon: AutomaticIcon, label: 'Automatic' },
     camper.engine && { icon: FuelIcon },
-    camper.AC && { icon: ACIcon },
-    camper.kitchen && { icon: KitchenIcon },
+    camper.AC && { icon: ACIcon, label: 'AC' },
+    camper.kitchen && { icon: KitchenIcon, label: 'Kitchen' },
     camper.radio && { icon: RadioIcon },
-    camper.microwave && { icon: MicrowaveIcon },
-    camper.gas && { icon: GasIcon },
-    camper.water && { icon: WaterIcon },
+    camper.microwave && { icon: MicrowaveIcon, label: 'Microwave' },
+    camper.gas && { icon: GasIcon, label: 'Gas' },
+    camper.water && { icon: WaterIcon, label: 'Water' },
   ].filter(Boolean);
 
   return (

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCampers, setFilters, setVehicleType, toggleFavorite, nextPage } from '../store/slices/campersSlice';
