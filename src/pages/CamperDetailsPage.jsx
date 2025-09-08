@@ -10,7 +10,7 @@ import Star from '../assets/icon_catalog/star.svg';
 import TransmissionIcon from '../assets/icon_catalog/diagram.svg';
 import KitchenIcon from '../assets/icon_catalog/cup-hot.svg';
 import ACIcon from '../assets/icon_catalog/wind.svg';
-import BathroomIcon from '../assets/icon_catalog/bathroom.svg';
+import BathroomIcon from '../assets/icon_catalog/Bathroom.svg';
 import TVIcon from '../assets/icon_catalog/tv.svg';
 import RefrigeratorIcon from '../assets/icon_catalog/solar_fridge-outline.svg';
 import MicrowaveIcon from '../assets/icon_catalog/lucide_microwave.svg';
