@@ -22,12 +22,15 @@ import styles from './CatalogPage.module.css';
 const CatalogPage = () => {
 
   const dispatch = useDispatch();
-  const { items: campers, status, favorites } = useSelector((state) => state.campers);
+  const campersState = useSelector((state) => state?.campers) || {};
+  const campers = campersState.items || [];
+  const status = campersState.status || 'idle';
+  const favorites = campersState.favorites || [];
   const [visibleCount, setVisibleCount] = useState(4);
   const loading = status === 'loading';
 
-  const filters = useSelector((state) => state.campers.filters);
-  const vehicleType = useSelector((state) => state.campers.vehicleType);
+  const filters = campersState.filters || {};
+  const vehicleType = campersState.vehicleType || '';
   const [localEquipment, setLocalEquipment] = useState(filters.equipment || []);
   const [localVehicleType, setLocalVehicleType] = useState(vehicleType || '');
   const [localLocation, setLocalLocation] = useState(filters.location || '');
@@ -93,7 +96,7 @@ const CatalogPage = () => {
 
   console.log('Campers:', campers);
   console.log('vehicleType:', vehicleType);
-  console.log('campers form:', campers.map(c => c.form));
+  console.log('campers form:', campers.map ? campers.map(c => c.form) : []);
   const filteredCampers = Array.isArray(campers) ? campers.filter((camper) => {
     if (vehicleType && vehicleType !== '' && camper.form?.toLowerCase() !== vehicleType.toLowerCase()) return false;
     if (filters.equipment && Array.isArray(filters.equipment) && filters.equipment.length > 0) {

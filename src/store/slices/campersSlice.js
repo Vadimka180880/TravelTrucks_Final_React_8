@@ -66,9 +66,13 @@ const campersSlice = createSlice({
       })
       .addCase(fetchCampers.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        const campersArray = action.payload.items;
+        // API may return an array directly or an object with `items`
+        const payload = action.payload;
+        const campersArray = Array.isArray(payload) ? payload : payload?.items;
         if (Array.isArray(campersArray)) {
           state.items = campersArray;
+        } else if (Array.isArray(payload)) {
+          state.items = payload;
         } else {
           state.error = 'Unexpected data format from server';
           state.hasMore = false;
