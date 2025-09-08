@@ -7,7 +7,7 @@ import Loader from '../components/Loader';
 import ACIcon from '../assets/icon_catalog/wind.svg';
 import KitchenIcon from '../assets/icon_catalog/cup-hot.svg';
 import AutomaticIcon from '../assets/icon_catalog/diagram.svg';
-import BathroomIcon from '../assets/icon_catalog/bathroom.svg';
+import BathroomIcon from '../assets/icon_catalog/Bathroom.svg';
 import TVIcon from '../assets/icon_catalog/tv.svg';
 import RadioIcon from '../assets/icon_catalog/Radio.svg';
 import FridgeIcon from '../assets/icon_catalog/solar_fridge-outline.svg';
