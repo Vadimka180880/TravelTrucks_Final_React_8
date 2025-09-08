@@ -5,10 +5,11 @@ import styles from './BookingForm.module.css';
 import PropTypes from 'prop-types';
 
 const BookingForm = ({ camper }) => {
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  // single booking date as in the mock
+  const [bookingDate, setBookingDate] = useState(new Date());
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [comment, setComment] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,48 +17,58 @@ const BookingForm = ({ camper }) => {
       alert('Camper information is missing.');
       return;
     }
-    alert(`Booking confirmed for ${camper.name} from ${startDate.toDateString()} to ${endDate.toDateString()}`);
+    // Minimal confirm action for now
+    alert(`Booking requested for ${camper.name} on ${bookingDate.toDateString()}`);
   };
 
   return (
     <div className={styles.bookingForm}>
-      <h2>Book {camper?.name}</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name:</label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+      <h2 className={styles.title}>Book your campervan now</h2>
+      <p className={styles.subtitle}>Stay connected! We are always ready to help you.</p>
+
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <input
+          id="name"
+          className={styles.input}
+          type="text"
+          placeholder="Name*"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+        <input
+          id="email"
+          className={styles.input}
+          type="email"
+          placeholder="Email*"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+  {/* labels removed — placeholders are shown inside inputs */}
+        <div className={styles.dateWrapper}>
+          <DatePicker
+            id="bookingDate"
+            className={styles.input}
+            selected={bookingDate}
+            onChange={(date) => setBookingDate(date)}
+            placeholderText="Booking date*"
+            dateFormat="dd/MM/yyyy"
             required
           />
         </div>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Start Date:</label>
-          <DatePicker
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
-          />
-        </div>
-        <div>
-          <label>End Date:</label>
-          <DatePicker
-            selected={endDate}
-            onChange={(date) => setEndDate(date)}
-          />
-        </div>
+        <textarea
+          id="comment"
+          className={styles.textarea}
+          placeholder="Comment"
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          rows={4}
+        />
+
         <div className={styles.buttonGroup}>
           <button type="submit" className={styles.confirm}>
-            Confirm Booking
+            Send
           </button>
         </div>
       </form>
@@ -67,8 +78,8 @@ const BookingForm = ({ camper }) => {
 
 BookingForm.propTypes = {
   camper: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-  }).isRequired,
+    name: PropTypes.string,
+  }),
 };
 
 export default BookingForm;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import BookingForm from '../components/BookingForm';
 import ImageModal from '../components/ImageModal';
@@ -56,46 +56,47 @@ const CamperDetailsPage = () => {
     );
   };
 
-  const openModal = (index) => {
-    setCurrentImageIndex(index);
-    setIsModalOpen(true);
-  };
-
   return (
     <div className={styles.container}>
-      <Link to="/catalog" className={styles.backLink}>← Back to Catalog</Link>
 
       <div className={styles.header}>
-        <h1 className={styles.name}>{camper.name}</h1>
-        <div className={styles.ratingRow}>
-          <img src={Star} alt="Rating" className={styles.starIcon} />
-          <span className={styles.rating}>{camper.rating}</span>
-          <span className={styles.reviewsCount}>({camper.reviews.length} Reviews)</span>
-          <span className={styles.location}>📍 {
-            (() => {
-              const loc = (camper.location || '').split(',').map(s => s.trim());
-              return loc.length === 2 ? `${loc[1]}, ${loc[0]}` : camper.location;
-            })()
-          }</span>
+        <div className={styles.headerLeft}>
+          <div className={styles.headerTop}>
+            <h1 className={styles.name}>{camper.name}</h1>
+            <div className={styles.ratingRow}>
+              <img src={Star} alt="Rating" className={styles.starIcon} />
+              <span className={styles.rating}>{camper.rating}</span>
+              <span className={styles.reviewsCount}>({camper.reviews.length} Reviews)</span>
+              <span className={styles.location}>📍 {(() => {
+                const loc = (camper.location || '').split(',').map(s => s.trim());
+                return loc.length === 2 ? `${loc[1]}, ${loc[0]}` : camper.location;
+              })()}</span>
+            </div>
+          </div>
+
+          <p className={styles.price}>
+            €{formatPrice(camper.price)}
+          </p>
         </div>
-  <p className={styles.price}>€{formatPrice(camper.price)}</p>
       </div>
 
-      <div className={styles.imageGallery}>
-        {camper.gallery.map((img, index) => (
-          <img
-            key={index}
-            src={img.thumb}
-            alt={`Gallery ${index + 1}`}
-            className={styles.galleryImage}
-            onClick={() => openModal(index)}
-          />
-        ))}
-      </div>
+      {camper.gallery && camper.gallery.length > 0 && (
+        <div className={styles.imageGallery}>
+          {camper.gallery.map((img, index) => (
+            <img
+              key={index}
+              src={img.thumb || img}
+              alt={`Gallery ${index + 1}`}
+              className={styles.galleryImage}
+              onClick={() => { setCurrentImageIndex(index); setIsModalOpen(true); }}
+            />
+          ))}
+        </div>
+      )}
 
       {isModalOpen && (
         <ImageModal
-          src={camper.gallery[currentImageIndex].original}
+          src={camper.gallery[currentImageIndex].original || camper.gallery[currentImageIndex].thumb}
           alt={`Camper ${currentImageIndex + 1}`}
           onClose={() => setIsModalOpen(false)}
           onPrev={handlePrevImage}
@@ -121,38 +122,45 @@ const CamperDetailsPage = () => {
               Reviews ({camper.reviews.length})
             </button>
           </div>
+          {/* full-width grey divider to match design */}
+          <div className={styles.fullWidthDivider} aria-hidden />
 
           {activeTab === 'features' && (
             <>
-              <div className={styles.featureList}>
-                {features.map((f, idx) => {
-                  const isBathroom = f.label === 'Bathroom';
-                  const classNames = [styles.icon];
-                  if (isBathroom) classNames.push(styles.iconLarge);
-                  if (f.icon === PetrolIcon) classNames.push(styles.petrol);
-                  return (
-                        <div key={idx} className={styles.featureItem}>
-                          {f.isComponent ? (
-                            <f.icon className={classNames.join(' ')} />
-                          ) : (
-                            <img src={f.icon} alt={f.label} className={classNames.join(' ')} />
-                          )}
-                          <span className={styles.label}>{f.label}</span>
-                        </div>
-                  );
-                })}
-              </div>
+              <div className={styles.leftPanel}>
+                <div className={styles.featureList}>
+                  {features.map((f, idx) => {
+                    const isBathroom = f.label === 'Bathroom';
+                    const classNames = [styles.icon];
+                    if (isBathroom) classNames.push(styles.iconLarge);
+                    if (f.icon === PetrolIcon) classNames.push(styles.petrol);
+                    return (
+                      <div key={idx} className={styles.featureItem}>
+                        {f.isComponent ? (
+                          <f.icon className={classNames.join(' ')} />
+                        ) : (
+                          <img src={f.icon} alt={f.label} className={classNames.join(' ')} />
+                        )}
+                        <span className={styles.label}>{f.label}</span>
+                      </div>
+                    );
+                  })}
+                </div>
 
-              <table className={styles.detailsTable}>
-                <tbody>
-                  <tr><td>Form</td><td>{camper.form}</td></tr>
-                  <tr><td>Length</td><td>{camper.length}</td></tr>
-                  <tr><td>Width</td><td>{camper.width}</td></tr>
-                  <tr><td>Height</td><td>{camper.height}</td></tr>
-                  <tr><td>Tank</td><td>{camper.tank}</td></tr>
-                  <tr><td>Consumption</td><td>{camper.consumption}</td></tr>
-                </tbody>
-              </table>
+                <div className={styles.vehicleCard}>
+                  <div className={styles.vehicleHeader}>Vehicle details</div>
+                  <table className={styles.detailsTable}>
+                    <tbody>
+                      <tr><td>Form</td><td>{camper.form}</td></tr>
+                      <tr><td>Length</td><td>{camper.length}</td></tr>
+                      <tr><td>Width</td><td>{camper.width}</td></tr>
+                      <tr><td>Height</td><td>{camper.height}</td></tr>
+                      <tr><td>Tank</td><td>{camper.tank}</td></tr>
+                      <tr><td>Consumption</td><td>{camper.consumption}</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </>
           )}
 
@@ -160,8 +168,16 @@ const CamperDetailsPage = () => {
             <div className={styles.reviews}>
               {camper.reviews.map((r, i) => (
                 <div key={i} className={styles.reviewItem}>
-                  <p>⭐ {r.reviewer_rating}/5 - {r.reviewer_name}</p>
-                  <p>{r.comment}</p>
+                  <div className={styles.reviewHeader}>
+                    <div className={styles.avatar} aria-hidden>
+                      {r.reviewer_name ? r.reviewer_name.charAt(0).toUpperCase() : '?'}
+                    </div>
+                    <div>
+                      <div className={styles.reviewerName}>{r.reviewer_name}</div>
+                      <div className={styles.reviewMeta}>⭐ {r.reviewer_rating}/5</div>
+                    </div>
+                  </div>
+                  <p className={styles.reviewText}>{r.comment}</p>
                 </div>
               ))}
             </div>

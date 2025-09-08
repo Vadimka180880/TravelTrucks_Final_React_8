@@ -14,16 +14,19 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1440px; 
+    max-width: 1200px; 
     margin: 0 auto;
-    padding: 24px 64px; 
+    padding: 24px 20px; 
     height: 100%;
     box-sizing: border-box;
   }
   
   .logoContainer {
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
   }
+  
   
   .logo {
     margin: 0; 
@@ -66,14 +69,19 @@
     font-weight: 500;
     padding: 8px 12px;
     border-radius: 4px;
-    transition: background-color 0.2s;
+    transition: color 0.18s ease, font-weight 0.18s ease;
+    background: none;
   }
-  
-  .navLink:hover,
-  .navLink.active {
-    background-color: #D84343;
-;
-    color: #fff;
+
+  .navLink:hover {
+    color: var(--accent-color, #E44848);
+  }
+
+  .navLink.active,
+  .navLinkActive {
+    color: var(--accent-color, #E44848);
+    background: none;
+    font-weight: 600;
   }
   
   @media (max-width: 768px) {

@@ -86,7 +86,9 @@
   
   .ctaButton:hover {
     background-color: #D84343;
-;
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(216,67,67,0.12);
   }
 
   @media (max-width: 768px) {

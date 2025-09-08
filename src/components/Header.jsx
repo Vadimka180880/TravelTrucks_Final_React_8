@@ -64,7 +64,15 @@ const Header = () => {
             </li>
             {favorites && favorites.length > 0 && (
               <li>
-                <Link to="/favorites" className={styles.navLink} onClick={closeMenu}>Favorites</Link>
+                <Link
+                  to="/favorites"
+                  className={
+                    styles.navLink + (location.pathname.startsWith('/favorites') ? ' ' + styles.navLinkActive : '')
+                  }
+                  onClick={closeMenu}
+                >
+                  Favorites
+                </Link>
               </li>
             )}
           </ul>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCampers, setFilters, setVehicleType, toggleFavorite, nextPage } from '../store/slices/campersSlice';
+import { fetchCampers, setFilters, setVehicleType, toggleFavorite } from '../store/slices/campersSlice';
 import CamperCard from '../components/CamperCard';
 import Loader from '../components/Loader';
 
@@ -89,6 +89,8 @@ const CatalogPage = () => {
     setVisibleCount((prev) => prev + 4);
   };
 
+  const [usePrimaryButton] = useState(true);
+
   console.log('Campers:', campers);
   console.log('vehicleType:', vehicleType);
   console.log('campers form:', campers.map(c => c.form));
@@ -103,7 +105,6 @@ const CatalogPage = () => {
         if (!(camper[eq] || camper[eq?.toLowerCase?.()] || camper[eq?.toUpperCase?.()])) return false;
       }
     }
-    // Локація
     if (filters.location && filters.location.length > 0) {
       if (!camper.location?.toLowerCase().includes(filters.location.toLowerCase())) return false;
     }
@@ -194,8 +195,13 @@ const CatalogPage = () => {
               </div>
               {visibleCount < filteredCampers.length && !loading && (
                 <div className={styles.loadMoreContainer}>
-                  <button className={styles.loadMoreButton} onClick={handleLoadMore}>
-                    Load More
+                  <button
+                    className={
+                      styles.loadMoreButton + (usePrimaryButton ? ' ' + styles.loadMorePrimary : '')
+                    }
+                    onClick={handleLoadMore}
+                  >
+                    Load more
                   </button>
                 </div>
               )}

@@ -9,6 +9,15 @@
   
   .camperList {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      align-items: start;
+  }
+
+  .singleColumn {
+    grid-template-columns: 1fr !important;
+  }
+
+  @media (min-width: 1200px) {
+    .camperList:not(.singleColumn) { grid-template-columns: repeat(2, 1fr); }
   }

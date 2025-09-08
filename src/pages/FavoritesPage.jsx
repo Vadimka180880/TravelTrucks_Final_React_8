@@ -21,7 +21,7 @@ const FavoritesPage = () => {
         {favorites.length === 0 ? (
           <p className={styles.empty}>No favorites yet</p>
         ) : (
-          <div className={styles.camperList}>
+          <div className={`${styles.camperList} ${favorites.length > 2 ? styles.singleColumn : ''}`}>
             {favorites.map((camper) => (
               <CamperCard
                 key={camper.id}

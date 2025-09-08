@@ -1,22 +1,39 @@
+.container {
+  max-width: 1312px;
+  margin: 0 auto;
+  padding: 48px 64px; 
+  box-sizing: border-box;
+}
+
 .header {
   grid-column: 1 / -1;
   margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: 1fr auto; 
+  gap: 24px;
+}
+.headerLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
+.headerTop {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 
 .name {
-  font-size: 24px;
-  margin-bottom: 10px;
   font-size: 28px;
-  font-weight: bold;
-  margin-bottom: 10px;
+  font-weight: 700;
+  margin: 0;
 }
 
 .ratingRow {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 8px;
 }
 
 .reviewsCount { color: #666; font-size: 14px; }
@@ -28,6 +45,7 @@
   color: #555;
 }
 
+.icon, .featureItem img { filter: drop-shadow(0 6px 14px rgba(16,24,40,0.08)); }
 .starIcon {
   width: 20px;
   height: 20px;
@@ -35,30 +53,25 @@
 
 .imageGallery {
   display: flex;
-  gap: 16px;
+  gap: 24px;
   margin-bottom: 24px;
-  flex-wrap: wrap;  
+  flex-wrap: nowrap; 
+  align-items: flex-start;
 }
 
 .galleryImage {
-  width: 220px;
-  height: 160px;
+  width: 292px;
+  height: 312px; 
   object-fit: cover;
   border-radius: 12px;
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  flex: 0 0 auto;
 }
 
 .galleryImage:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.imageGallery img {
-  width: 200px;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 12px;
+  transform: translateY(-6px);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.12);
 }
 
 .description {
@@ -76,33 +89,43 @@
 .mainContent {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  gap: 40px;
+  gap: 48px; 
+}
+
+:root {
+  --side-panel-width: 420px; 
+  --side-panel-min-height: 420px;
 }
 
 .featureList {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
+  background: #ffffff;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #eef0f2;
+  box-shadow: 0 4px 12px rgba(16,24,40,0.04);
 }
 
 .featureItem {
-  background: #f2f4f7;
-  border-radius: 12px;
-  padding: 6px 12px;
-  display: flex;
+  background: #F2F4F7; 
+  border-radius: 10px;
+  padding: 6px 10px;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 24px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
   color: #101828;
   min-width: auto;
+  height: 34px;
 }
 
-.featureItem img { object-fit: contain; }
-
-.icon { width: 20px !important; height: 20px !important; object-fit: contain; display: inline-block; }
+.featureItem img { object-fit: contain; width:18px; height:18px; display:inline-block; }
+.icon { width: 16px !important; height: 16px !important; object-fit: contain; display: inline-block; }
 
 .rasterIcon { transform: none !important; display: inline-block; vertical-align: middle; }
 
@@ -124,8 +147,8 @@
 }
 
 .tabs button {
-  background: none;
-  border: none;
+  background: none !important;
+  border: none !important;
   padding: 8px 0;
   font-weight: 600;
   cursor: pointer;
@@ -143,7 +166,7 @@
   content: '';
   position: absolute;
   left: 0;
-  bottom: -12px;
+  bottom: -8px;
   width: 48px;
   height: 4px;
   background: #e44848;
@@ -155,21 +178,83 @@
 .detailsTable {
   width: 100%;
   border-collapse: collapse;
+  background: transparent;
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 12px;
+  padding: 12px;
+  box-sizing: border-box;
 }
 
 .detailsTable td {
-  padding: 4px 8px;
+  padding: 12px 14px;
   color: #555;
+  vertical-align: middle;
+}
+
+.detailsTable tr td:first-child {
+  color: #6b7280; 
+  width: 160px;
+  font-weight: 600;
+  padding-left: 8px;
+}
+
+.detailsTable tr td:last-child {
+  text-align: right;
+  color: #111827;
+  font-weight: 700;
+}
+
+.vehicleCard {
+
+  background: #ffffff;
+  border: 1px solid #eef0f2;
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 8px;
+  display: block;
+  box-shadow: 0 6px 20px rgba(16,24,40,0.04);
+}
+
+.fullWidthDivider {
+  height: 1px;
+  background: linear-gradient(90deg, rgba(224,230,236,1) 0%, rgba(238,240,242,1) 100%);
+  margin: 18px 0 20px; 
+  width: 100%;
+}
+
+.leftPanel {
+  width: auto; 
+  min-height: var(--side-panel-min-height);
+  background: transparent;
+  border-radius: 12px;
+  padding: 8px 0 0 0;
+  box-sizing: border-box;
+}
+
+.vehicleHeader {
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 12px;
+  font-size: 16px;
 }
 
 .bookingSection {
-  background: #f9f9f9;
+  background: #fff;
   padding: 20px;
   border-radius: 12px;
   height: fit-content;
   position: sticky;
   top: 20px;
+  box-shadow: 0 10px 30px rgba(16,24,40,0.06);
+  border: 1px solid #eef0f2;
+
+  width: var(--side-panel-width);
+  box-sizing: border-box;
+  margin-left: auto; 
+  min-height: var(--side-panel-min-height);
 }
+
+.vehicleCard, .bookingSection { min-height: var(--side-panel-min-height); }
 .reviews {
   display: flex;
   flex-direction: column;
@@ -196,14 +281,65 @@
   color: #000;
 }
 
+.reviewHeader {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #f3f4f6;
+  color: #e44848;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(16,24,40,0.06);
+}
+
+.reviewerName { font-weight: 700; color: #0f172a; }
+.reviewMeta { font-size: 13px; color: #6b7280; }
+.reviewText { margin-top: 8px; color: #374151; }
+
   
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     .container {
-      grid-template-columns: 1fr;
+      padding: 24px;
     }
-  
+
+    .imageGallery { flex-wrap: wrap; gap: 16px; }
+
+    .galleryImage { width: 180px; height: 140px; }
+
+    .mainContent {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
     .bookingSection {
       grid-column: 1;
       position: static;
     }
   }
+
+.mainContent { align-items: stretch; }
+.vehicleCard { display:block; height:auto; }
+.bookingSection { height:100%; position:static; }
+.bookingSection form { display:flex; flex-direction:column; height:100%; }
+
+.sidePanel {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  padding-top: 8px;
+}
+
+.featureItem { box-shadow: 0 4px 12px rgba(16,24,40,0.04); }
+.icon, .featureItem img { filter: drop-shadow(0 6px 14px rgba(16,24,40,0.08)); }

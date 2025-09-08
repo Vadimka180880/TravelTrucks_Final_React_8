@@ -26,7 +26,19 @@ export default function Home() {
           size="large"
           color="primary"
           onClick={() => navigate('/catalog')}
-          sx={{ fontWeight: 600, px: 4, py: 1.5, borderRadius: 2, fontSize: 18 }}
+          sx={{
+            fontWeight: 600,
+            px: 4,
+            py: 1.5,
+            borderRadius: 2,
+            fontSize: 18,
+            ':hover': {
+              bgcolor: '#D84343',
+              color: '#fff',
+              transform: 'translateY(-2px)',
+              boxShadow: '0 8px 24px rgba(216,67,67,0.12)'
+            }
+          }}
         >
           View Now
         </Button>

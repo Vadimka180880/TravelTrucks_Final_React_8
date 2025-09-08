@@ -1,0 +1,7 @@
+ .reviewsPage { padding: 24px; max-width: 900px; margin: 0 auto; }
+ .review { padding: 14px; border-radius: 12px; background: #fff; border: 1px solid #eef0f2; margin-bottom: 12px; box-shadow: 0 6px 20px rgba(16,24,40,0.04); }
+ .reviewHeader { display:flex; gap:12px; align-items:center; }
+ .avatar { width:42px; height:42px; border-radius:50%; background:#f3f4f6; color:#e44848; display:inline-flex; align-items:center; justify-content:center; font-weight:700; }
+ .reviewerName { font-weight:700; color:#0f172a; }
+ .reviewMeta { font-size:13px; color:#6b7280; }
+ .reviewText { margin-top:8px; color:#374151; }

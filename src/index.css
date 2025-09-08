@@ -5,13 +5,13 @@
 }
 
 :root {
-  /* Typography variables */
   --font-family-base: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
   --font-size-base: 16px;
   --line-height-base: 24px;
   --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
+  --accent-color: #E44848;
   font-family: var(--font-family-base);
   font-size: var(--font-size-base);
   line-height: var(--line-height-base);
@@ -29,7 +29,7 @@ html, body {
   margin: 0;
   padding: 0;
   width: 100%;
-  font-size: 1rem; /* base font size */
+  font-size: 1rem;
   overflow-x: hidden;
   background-color: #ffffff;
 }
@@ -46,7 +46,7 @@ a {
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  color: var(--accent-color);
 }
 
 body {
@@ -74,6 +74,7 @@ button {
 }
 button:hover {
   border-color: #646cff;
+  color: var(--accent-color);
 }
 button:focus,
 button:focus-visible {
@@ -86,10 +87,13 @@ button:focus-visible {
     background-color: #ffffff;
   }
   a:hover {
-    color: #fdfbfb;
+    color: var(--accent-color);
   }
-  button {
-    background-color: #D84343;
-;
-  }
+  
+}
+
+.accentOutline {
+  background: #fff !important;
+  border: 2px solid var(--accent-color) !important;
+  color: var(--accent-color) !important;
 }

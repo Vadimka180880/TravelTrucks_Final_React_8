@@ -2,7 +2,7 @@
   display: flex;
   gap: 40px;
   padding: 40px 0 0 0; 
-  max-width: 1200px;
+  max-width: 1200px; 
   margin: 0 auto;
   background: #fff;
   min-height: 100vh;
@@ -80,7 +80,7 @@
 }
 
 .filtersSection {
-  width: 280px;
+  width: 320px; 
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
@@ -105,34 +105,71 @@
   color: #333;
 }
 
-.vehicleTypeIcons { display:flex; gap:12px; }
+.vehicleTypeIcons {
+  display:flex;
+  gap:12px;
+}
 .vehicleTypeIcons button {
   display: flex;
+  flex-direction: column; 
   align-items: center;
-  gap: 8px;
-  padding: 12px 18px;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 8px; 
   background: #fff;
   border: 1px solid #dadde1;
   border-radius: 12px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
-  transition: all 0.25s ease;
+  transition: all 0.18s ease;
   color: #101828;
-  height: 56px;
+  min-height: 72px; 
+  flex: 1; 
+  box-sizing: border-box;
 }
-.vehicleTypeIcons button img { width:24px; height:24px; }
+.vehicleTypeIcons button img {
+  width: 28px;
+  height: 28px;
+  display: block;
+}
+.vehicleTypeIcons button span {
+  display: block;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.1;
+  color: inherit;
+}
 .vehicleTypeIcons button.activeVehicleType {
-  border: 2px solid #e44848;
+  border: 2px solid var(--accent-color, #e44848);
   background:#fff;
-  color:#e44848;
+  color:var(--accent-color, #e44848);
   font-weight:600;
 }
+
+.typeBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 10px; 
+  background: #fff;
+  border: 1px solid #dadde1;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  min-height: 72px;
+  box-sizing: border-box;
+}
+.typeBtn img { width:28px; height:28px; display:block; }
+.typeBtn span { display:block; text-align:center; font-size:13px; }
 
 .iconGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  gap: 12px;
 }
 
 .iconButton {
@@ -152,6 +189,7 @@
   width: 100%;
   height: 72px;
   box-shadow: none;
+  box-sizing: border-box;
 }
 
 .iconButton img {
@@ -177,7 +215,7 @@
 .bathroomIcon { width:31px !important; height:27px !important; }
 
 .searchButton {
-  padding: 16px 60px;
+  padding: 16px 48px;
   background-color: #e44848;
   color: #fff;
   border: none;
@@ -189,9 +227,14 @@
   width: auto;
   align-self: flex-start;
   box-shadow: 0 1px 2px rgba(16,24,40,0.03);
-  transition: background 0.2s;
+  transition: background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
 }
-.searchButton:hover { background-color:#d84343; }
+.searchButton:hover {
+  background-color: #d84343;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(216,67,67,0.12);
+}
 
 .loadMoreContainer {
   display: flex;
@@ -203,28 +246,53 @@
 .campersList { display:flex; flex-direction:column; gap:32px; }
 
 .loadMoreButton {
- width: 145;
-height: 56;
-opacity: 1;
-top: 20px;
-left: 20px;
-border-radius: 200px;
-padding-top: 16px;
-padding-right: 32px;
-padding-bottom: 16px;
-padding-left: 32px;
-gap: 10px;
-border: 1px solid #DADDE1;
-transition: background-color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 160px;
+  height: 56px;
+  padding: 0 32px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid #DADDE1;
+  color: #101828;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(16,24,40,0.03);
+  transition: all 0.18s ease;
 }
 
 .loadMoreButton:hover {
-  border: 1px solid #D84343
+  border-color: #b8bfc6;
+  transform: translateY(-1px);
+}
+
+/* red variant: use alongside the base class: className={`${styles.loadMoreButton} ${styles.loadMorePrimary}`} */
+.loadMorePrimary {
+  /* resting state: neutral contour, text is gray (not red) per mockup */
+  border-color: #DADDE1;
+  color: #475467;
+  /* make resting contour match the design but keep an accessible 2px when active/selected */
+  /* if we want an accent resting (outline) for some contexts, use the following utility instead */
+}
+
+.loadMorePrimary:hover {
+  /* contour-only hover: border and text switch to accent, background stays white */
+  background: #fff;
+  border-color: #E44848;
+  border-width: 2px;
+  color: #E44848;
+  box-shadow: 0 6px 18px rgba(228,72,72,0.06);
+  transform: translateY(-1px);
 }
 
 .loadMoreButton:disabled {
-  background-color: #ccc;
+  opacity: 0.6;
+  background: #f5f6f7;
+  border-color: #e6e8ea;
   cursor: not-allowed;
+  color: #9aa3ad;
 }
 
 @media (max-width: 1024px) {
