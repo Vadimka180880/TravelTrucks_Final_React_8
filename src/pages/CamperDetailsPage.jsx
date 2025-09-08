@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense, lazy } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import BookingForm from '../components/BookingForm';
-import ImageModal from '../components/ImageModal';
+const BookingForm = lazy(() => import('../components/BookingForm'));
+const ImageModal = lazy(() => import('../components/ImageModal'));
 import styles from './CamperDetailsPage.module.css';
 
 import Star from '../assets/icon_catalog/star.svg';
@@ -95,13 +95,15 @@ const CamperDetailsPage = () => {
       )}
 
       {isModalOpen && (
-        <ImageModal
-          src={camper.gallery[currentImageIndex].original || camper.gallery[currentImageIndex].thumb}
-          alt={`Camper ${currentImageIndex + 1}`}
-          onClose={() => setIsModalOpen(false)}
-          onPrev={handlePrevImage}
-          onNext={handleNextImage}
-        />
+        <Suspense fallback={null}>
+          <ImageModal
+            src={camper.gallery[currentImageIndex].original || camper.gallery[currentImageIndex].thumb}
+            alt={`Camper ${currentImageIndex + 1}`}
+            onClose={() => setIsModalOpen(false)}
+            onPrev={handlePrevImage}
+            onNext={handleNextImage}
+          />
+        </Suspense>
       )}
 
       <p className={styles.description}>{camper.description}</p>
@@ -185,7 +187,9 @@ const CamperDetailsPage = () => {
         </div>
 
         <div className={styles.bookingSection}>
-          <BookingForm camper={camper} />
+          <Suspense fallback={<div />}> 
+            <BookingForm camper={camper} />
+          </Suspense>
         </div>
       </div>
     </div>

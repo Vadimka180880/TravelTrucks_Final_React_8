@@ -1,8 +1,18 @@
-import React, { useState } from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './BookingForm.module.css';
 import PropTypes from 'prop-types';
+
+// We'll dynamically import DatePicker and its CSS to keep the main bundle smaller
+let DatePickerComponent = null;
+const loadDatePicker = async () => {
+  if (!DatePickerComponent) {
+    const module = await import('react-datepicker');
+    // dynamically load CSS
+    await import('react-datepicker/dist/react-datepicker.css');
+    DatePickerComponent = module.default || module;
+  }
+  return DatePickerComponent;
+};
 
 const BookingForm = ({ camper }) => {
   // single booking date as in the mock
@@ -10,6 +20,16 @@ const BookingForm = ({ camper }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [comment, setComment] = useState('');
+  const [DatePicker, setDatePicker] = useState(null);
+  const mounted = useRef(false);
+
+  useEffect(() => {
+    mounted.current = true;
+    loadDatePicker().then((Comp) => {
+      if (mounted.current) setDatePicker(() => Comp);
+    }).catch(() => {});
+    return () => { mounted.current = false; };
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -47,15 +67,19 @@ const BookingForm = ({ camper }) => {
         />
   {/* labels removed — placeholders are shown inside inputs */}
         <div className={styles.dateWrapper}>
-          <DatePicker
-            id="bookingDate"
-            className={styles.input}
-            selected={bookingDate}
-            onChange={(date) => setBookingDate(date)}
-            placeholderText="Booking date*"
-            dateFormat="dd/MM/yyyy"
-            required
-          />
+          {DatePicker ? (
+            <DatePicker
+              id="bookingDate"
+              className={styles.input}
+              selected={bookingDate}
+              onChange={(date) => setBookingDate(date)}
+              placeholderText="Booking date*"
+              dateFormat="dd/MM/yyyy"
+              required
+            />
+          ) : (
+            <input className={styles.input} placeholder="Booking date*" readOnly />
+          )}
         </div>
         <textarea
           id="comment"
